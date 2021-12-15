@@ -207,12 +207,8 @@ def test_update_link(test_app_with_db, monkeypatch):
         ],
     ],
 )
-def test_update_link_invalid(
-    test_app_with_db, link_id, payload, status_code, detail
-):
-    response = test_app_with_db.put(
-        f"/links/{link_id}/", data=json.dumps(payload)
-    )
+def test_update_link_invalid(test_app_with_db, link_id, payload, status_code, detail):
+    response = test_app_with_db.put(f"/links/{link_id}/", data=json.dumps(payload))
     assert response.status_code == status_code
     assert response.json()["detail"] == detail
 

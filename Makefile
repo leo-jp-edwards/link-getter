@@ -10,18 +10,18 @@ test:
 	docker compose exec web poetry run python -m pytest "tests" -p no:warnings
 
 coverage:
-	docker compose exec web poetry run python -m pytest "tests" -p no:warnings --cov="project"
+	docker compose exec web poetry run python -m pytest "tests" -p no:warnings --cov="."
 
 lint:
-	docker compose exec web poetry run flake8 project
+	docker compose exec web poetry run flake8 .
 
 lint_black: lint
-	docker compose exec web poetry run black project --check
-	docker compose exec web poetry run /bin/sh -c "isort project/**/*.py --check-only"
+	docker compose exec web poetry run black . --check
+	docker compose exec web poetry run /bin/sh -c "isort **/*.py --check-only"
 
 black:
-	docker compose exec web poetry run black project
-	docker compose exec web poetry run /bin/sh -c "isort project/**/*.py"
+	docker compose exec web poetry run black .
+	docker compose exec web poetry run /bin/sh -c "isort **/*.py"
 
 clean:
 	find . -type f -name "*.py[co]" -delete
@@ -29,7 +29,3 @@ clean:
 
 down:
 	docker compose down
-
-docker_clean:
-	docker rmi $(docker images -q)
-	echo 'CLEAN'
